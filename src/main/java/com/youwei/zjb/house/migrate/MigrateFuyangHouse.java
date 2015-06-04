@@ -14,23 +14,27 @@ public class MigrateFuyangHouse {
 		ThreadSession.setCityPY("fuyangOld");
 		List<OldHouse> list = dao.listByParams(OldHouse.class, "from OldHouse where id>=? and id<=? order by id asc", startId , endId);
 		for(OldHouse old : list){
-			ThreadSession.setCityPY("fuyangOld");
 			House house = new House();
-			//找到新的uid,did,cid
-			User oldUser = dao.get(User.class, old.uid);
-			if(oldUser==null){
-				continue;
-			}
 			ThreadSession.setCityPY("fuyang");
 			House newHousePo = dao.getUniqueByKeyValue(House.class, "oldId", old.id);
 			if(newHousePo!=null){
 				house = newHousePo;
 			}
 			house.oldId = old.id;
-			User newUser = dao.getUniqueByKeyValue(User.class, "lname", oldUser.lname);
-			house.uid = newUser.id;
-			house.did = newUser.did;
-			house.cid = newUser.cid;
+			//找到新的uid,did,cid
+			ThreadSession.setCityPY("fuyangOld");
+			User oldUser = dao.get(User.class, old.uid);
+			if(oldUser==null){
+				System.out.println("house["+old.id+"] has no publish user["+old.uid+"]");
+				house.uid = old.uid;
+				house.did = old.did;
+				house.cid = old.cid;
+			}else{
+				User newUser = dao.getUniqueByKeyValue(User.class, "lname", oldUser.lname);
+				house.uid = newUser.id;
+				house.did = newUser.did;
+				house.cid = newUser.cid;
+			}
 			house.ztai = old.ztai;
 			house.quyu = old.quyu;
 			house.area = old.area;

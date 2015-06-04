@@ -26,14 +26,16 @@ public class MigrateData {
 				MigrateFeixiHouseRent job = new MigrateFeixiHouseRent();
 				job.run(start , end);
 			}else if("fuyang".equalsIgnoreCase(city)){
-				
+				MigrateFuyangHouseRent job = new MigrateFuyangHouseRent();
+				job.run(start , end);
 			}
 		}else if ("GenJin".equalsIgnoreCase(jobName)){
 			if("feixi".equalsIgnoreCase(city)){
 				MigrateFeixiHouseGenjin job = new MigrateFeixiHouseGenjin();
 				job.run(start , end);
 			}else if("fuyang".equalsIgnoreCase(city)){
-				
+				MigrateFuyangHouseGenjin job = new MigrateFuyangHouseGenjin();
+				job.run(start , end);
 			}
 		}
 		
